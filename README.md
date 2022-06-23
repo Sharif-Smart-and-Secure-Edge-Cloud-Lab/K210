@@ -24,7 +24,8 @@ $ sudo screen /dev/ttyUSB0 115200
 
 Last argument shows the baud rate. Finally you will get a Python prompt. For more information refer to [MaixPy](https://wiki.sipeed.com/soft/maixpy/en/index.html) documentation.
 
+## C++ baremetal programming
+
 ## Go baremetal programming
 
-## C++ baremetal programming
 
