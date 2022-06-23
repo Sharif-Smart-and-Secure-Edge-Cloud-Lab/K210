@@ -1,0 +1,3 @@
+kflash==1.1.6
+pyelftools==0.28
+pyserial==3.5
