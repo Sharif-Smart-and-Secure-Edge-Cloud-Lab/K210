@@ -1,1 +1,5 @@
-SDKs/
+maix_blinky/go.mod
+maix_blinky/go.sum
+maix_blinky/maix_blinky
+maix_blinky/maix_blinky.bin
+

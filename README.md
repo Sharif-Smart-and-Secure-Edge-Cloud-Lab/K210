@@ -97,5 +97,77 @@ $ kflash -B goE -p /dev/ttyUSB0 -t hello_world.bin
 ```
 
 ## Go baremetal programming
+To use Go codes on Maixduio first you must install Go compiler on your machine. In order to build go from source, you need to have the go in first place! From version >= 1.4 this is necessary. If you don't have Go compiler already on you machine, then download latest relese from [go official website](https://go.dev/doc/install). After downloding the tarball, extract it and copy it to the `/usr/local/go` directory.
+
+```bash
+$ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz
+```
+Then add the go compiler to the PATH environment variable:
+
+```bash
+$ export PATH=$PATH:/usr/local/go/bin
+```
+Finally check if you have currectly configured the PATH variable:
+
+```bash
+$ go version
+```
+
+Now it is time to compile go from source to use it cross compiling. All steps are described in [this](https://embeddedgo.github.io/getting_started) page. First download the patch:
+
+```bash
+$ git clone https://github.com/embeddedgo/patch
+```
+Then download go compiler source code:
+    
+```bash
+$ git clone https://go.googlesource.com/go goroot
+```
+Apply the patch:
+    
+```bash
+$ cd goroot
+$ git checkout go1.18.3
+$ patch -p1 <../patch/go1.18.3
+$ cd src
+$ ./make.bash
+```
+You can use `./all.bash` instead of `./make.bash` to run all the tests after building the compiler. This takes extra time to build the compiler.
+
+Now it's time to run a test code. I've written a code in `maix_blinky` folder. It is deriven from [this tutorial](https://embeddedgo.github.io/2020/05/31/bare_metal_programming_risc-v_in_go.html). First go to the `maix_blinky` directory. Then compile the code:
+
+```bash
+$ cd maix_blinky
+$ go mod init maix_blinky
+```
+After that run the following command:
+
+```bash
+$ GOOS=noos GOARCH=riscv64 go build -tags k210 -ldflags '-M 0x80000000:6M'
+```
+You might get an error message about leds module. As the compiler says, install the module using the following command:
+
+```bash
+$ go get github.com/embeddedgo/kendryte/devboard/maixbit/board/leds
+```
+Then rerun the previous command. You would finally end up with these files:
+
+```bash
+$ ls 
+go.mod  go.sum  main.go  maix_blinky
+```
+The `maix_blinky` is the ELF file. But you can't burn it into flash. So, you need to convert it to binary. Since it is compiled for RISC-V architecture, use the RISC-V toolchain to convert it to binary (refer to C++ baremetal programming for more details):
+
+```bash
+$ riscv64-unknown-elf-objcopy -O binary maix_blinky maix_blinky.bin
+```
+Now burn the code into the flash memory using Kflash:
+
+```bash
+$ kflash -B goE -p /dev/ttyUSB0 -t maix_blinky.bin
+```
+You can see that led is blinking! 
+
+![blinky led](/imgs/go-blinky-led.gif)
 
 
