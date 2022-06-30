@@ -170,4 +170,41 @@ You can see that led is blinking!
 
 ![blinky led](/imgs/go-blinky-led.gif)
 
+## Developement with Arduino core
+This section is primarily based on ([this page](https://maixduino.sipeed.com/en/get_started/install.html) .
+To develop code with Arduino IDE, first install the Arduino IDE on your PC. Head over to [official Arduino download page](https://www.arduino.cc/en/Main/Software). Download the latest version and install it. To install on Linux, after untarring the tarball, run the following command:
 
+```bash
+$ sudo ./install.sh
+```
+After installing, you need to add your user to `dialout` group to grant access to serial ports. We've done it before (in C++ baremetal programming) but for sake of completeness, I'll mention it again:
+
+```bash
+$ sudo usermod -a -G dialout $(whoami)
+```
+Run the arduino IDE and select `File` -> `Preferences`. Add one of the following links to the `Additional Boards Manager URLs` section of the preferences:
+
+```bash
+http://dl.sipeed.com/MAIX/Maixduino/package_Maixduino_k210_index.json
+
+## in case of slow download, try this:
+http://dl.sipeed.com/MAIX/Maixduino/package_Maixduino_k210_dl_cdn_index.json
+```
+
+![arduino URLs](/imgs/arduino-URLs.png)
+
+Now go to `Tools` -> `Board` -> `Boards manager` and search for `Maixduino`. Selecte the latest version and install it. 
+
+After installing it's time to change board settings. First run a terminal. Make sure that you have activated the python virtual environment we built it before. Arduino IDE will use `kflash` to programm the board. Within that terminal, run the Arduino IDE (if you have installed `kflash` globally, you probably don't need to do that). Next in `Tools` menu, change these settings:
+
+- `Board`: Choose your dev board (in our case choose `Sipeed Maixduino board` )
+- `Burn Tool Frimware`: Choose `default`
+- `Burn Baudrate`: Decrese the baudrate if download fails (I choosed 400MHz)
+- `Port`: Serial port that the board is connected (e.g. /dev/ttyUSB0)
+- `Programmer`: Burn tool. You **must** choose `kflash`
+
+Finally, we are ready to programm the board using Arduino IDE! I have provided a test code in `arduino-test` directory. It's a simple blinker that you can see the result in the following video:
+
+![blinker](./imgs/arduino-blinky-led.gif)
+
+## Developement with PlatformIO
