@@ -208,3 +208,55 @@ Finally, we are ready to programm the board using Arduino IDE! I have provided a
 ![blinker](./imgs/arduino-blinky-led.gif)
 
 ## Developement with PlatformIO
+PlatfromIO is and IDE built on top of Vscode. It supports lots of boards and architectures and comes with a lot of libraries and features. 
+
+The instructions mentioned here are derived from [this page](https://acoptex.com/project/11835/basics-project-083w-sipeed-maixduino-board-using-platformio-ide-at-acoptexcom/). First of all, install Vscode. Then navigate to extenstions pane and install PlatformIO (I suppose you are familliar with vscode. If you're not, visit the mentioned source). 
+
+Then open PlatformIO and click on `New Terminal` in `Miscellaneous` pane on the left. In the terminal, run the following command to install libraries and examples of Kendrtye k210 board:
+
+```bash
+$ platformio platform install "kendryte210"
+```
+
+After installing the libraries, go to PIO home section, then select `Project Examples`. Find `arduino-blink` project in the list (below K210). Now wait for the project to be created. 
+
+In `platfromio.ini` file, you can delete these parts to omit building for other boards:
+
+![delete these parts](/imgs/platformio-ini.png)
+
+Finally click on `build` and then `upload` to program the flash (these buttons are located in the bottom pane of vscode). The result will be a blinky led on pin 13. So, you can connect a led along with a resistor to this pin to see the blnking effect:
+
+![blinky led platformio](/imgs/platformIO-blinky-led.gif)
+
+
+## Setting up Mic, LCD, and Camera
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
