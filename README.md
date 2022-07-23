@@ -234,15 +234,15 @@ Finally click on `build` and then `upload` to program the flash (these buttons a
 
 To set up using LCD I used arduino since it's fairly easy to use. The sample code is in the `LCD-test` directory. We installed all required libraries in the `arduino` installation section so nothing extra shall be done. Test code is borrowd from [this](https://github.com/sipeed/Maixduino/blob/master/libraries/Sipeed_ST7789/examples/basic_display/basic_display.ino) link. Here you can see the result of running the program:
 
-![LCD test](imgs/LCD-test.gif)
+![LCD test](./imgs/LCD-test.gif)
 
 I couldn't use the camera module with arduino. First of all there is an error compiling `Camera-test` code. The issue is in the `Sipeed_OV2640.cpp` file and it is a misspelling of `SetRotation` function that leads to being unable to make and instance of an abstract class. To handle this just rename the `SetRotaion` to `SetRotation` in both header and source files (I've done this already in the `Sipeed_OV2640.h` and `Sipeed_OV2640.cpp` files). However, this is not enough. Although the code compiles, it is not able to work and you can't use the camera. It seems that the camera that is shipped with the board is not actually an `OV2640` camera. For more information about the issue, check [this link](https://github.com/sipeed/Maixduino/issues/59) out. 
 
 But it seems that you can use the camera with python. I'll test this in near future and update this section.
 
+To test the microphone, I've used [this repository](https://github.com/andriyadi/Maix-SpeechRecognizer) which is a simple speech recognition code. I've changed it a bit so that the code can detect persian 'salam' word. Whole code is provided in `Maix-SpeechRecognizer` directory. For more information about how to train and use the code, refer to the repository (also you can check out the README in that repository). Codes are tested with `PlatformIO`. I've recorded a simple video showing the system performance. The video file is in the `Maix-SpeechRecognizer` directory ([this file](./Maix-SpeechRecognizer/result.mp4))
 
-
-
+However the performance is not great and it could be improved by using a better microphone, a better training procedure, and a better algorithm.
 
 
 
